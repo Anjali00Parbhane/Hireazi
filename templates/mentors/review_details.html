@@ -1,0 +1,32 @@
+{%extends 'mentors/mentor_base.html'%}
+
+{%block body%}
+<center><h1>Review List </h1></center>
+<div class='container'>
+    <div class="review-list">
+        {% if projectreview %}
+            <div class="row">
+                {% for review in projectreview %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card" style="cursor: pointer;" onclick="openReviewDetailsPage('{{ review.id }}')">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ review.review_name.name }}</h5>
+                                <p class="card-text">{{review.review_name.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No Reviews Scheduled till now.</p>
+        {% endif %}
+    </div>
+</div>
+{%endblock%}
+{%block script%}
+<script>
+    function openReviewDetailsPage(reviewId) {
+        window.location.href = `/review_score/${reviewId}/`; 
+    }
+</script>
+{%endblock%}

@@ -1,0 +1,151 @@
+{% extends 'mentors/mentor_base.html' %}
+
+{% block style %}
+<style>
+  .container {
+    margin-top: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    color: #333;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .table th,
+  .table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .table th {
+    background-color: #2196F3;
+    color: white;
+    font-weight: bold;
+  }
+
+  .table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  .table a {
+    color: #5469d4;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .table a:hover {
+    color: #333;
+  }
+
+  .messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  .messages li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+
+  .messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  .messages .success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<br>
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+<div class="container">
+  <center>
+    <h1>Projects Assigned to You</h1><br>
+  </center>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Project Title</th>
+        <th>Domain</th>
+        <th>Members</th>
+        <th>Tech Stack</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in projects %}
+      <tr>
+        <td><a href="{% url 'project_tasks_mentor' project.id %}">{{ project.project_title }}</a></td>
+        <td>{{ project.project_domain }}</td>
+        <td>{{ project.member_details_1 }}, {{ project.member_details_2 }}, {{ project.member_details_3 }}, {{ project.member_details_4 }}</td>
+        <td>{{ project.tech_stack }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">No projects found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+{% comment %} 
+{%extends 'mentors/mentor_base.html'%}
+
+{%block body%}
+<br>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="container">
+        <center><h1>Projects Assigned to You</h1><br></center>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Project Title</th>
+                    <th>Domain</th>
+                    <th>Members</th>
+                    <th>Tech Stack</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td><a href="{% url 'project_tasks_mentor' project.id %}">{{ project.project_title }}</a></td>
+                    <td>{{ project.project_domain }}</td>
+                    <td>{{ project.member_details_1 }}, {{ project.member_details_2 }}, {{ project.member_details_3 }}, {{ project.member_details_4 }}</td>
+                    <td>{{ project.tech_stack }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No projects found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{%endblock%} {% endcomment %}

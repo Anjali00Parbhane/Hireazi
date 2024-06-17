@@ -1,0 +1,42 @@
+{% extends 'mentors/mentor_base.html' %}
+
+{% block body %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0px;
+  }
+
+  h1 {
+    font-size: 2em;
+    margin-bottom: 15px;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  .review-details {
+    margin:50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .review-details > p {
+    flex: 1 0 45%;
+  }
+</style>
+
+<h1>Review Details</h1>
+<div class="review-details">
+  <p>Project: {{ review.project }}</p>
+  <p>Review Name: {{ review.review_name }}</p>
+  <p>Score by : {{ review.score1 }}</p>
+  <p>Score 2: {{ review.score2 }}</p>
+  <p>Score 3: {{ review.score3 }}</p>
+  <p>Score 4: {{ review.score4 }}</p>
+</div>
+{% endblock %}

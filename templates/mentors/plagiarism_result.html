@@ -1,0 +1,78 @@
+{%extends 'mentors/mentor_base.html'%}
+{% block style %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #5469d4;
+  }
+
+  .result-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .result-container p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+
+  .result-container p strong {
+    color: #333;
+  }
+
+  .error-message {
+    color: #e74c3c;
+    font-weight: bold;
+  }
+
+  .button-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .button-container a {
+    text-decoration: none;
+    background-color: #5469d4;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+
+  .button-container a:hover {
+    background-color: #45a049;
+  }
+</style>
+{% endblock %}
+{%block body%}
+<br>
+<div class="result-container">
+    <br>
+    {% if result %}
+      <h1>Plagiarism Result</h1>
+      <br>
+      <p><strong>Similarity Score:</strong> {{ result.similarity_score }}</p>
+      <p><strong>Is Plagiarized:</strong> {{ result.is_plagiarized }}</p>
+    {% else %}
+      <p class="error-message">Error: No data received from API.</p>
+    {% endif %}
+    <div class="button-container">
+      <a href="{% url 'plagiarism_check' %}">Check Another Document</a>
+      <br>
+    </div>
+  </div>
+{%endblock%}
+

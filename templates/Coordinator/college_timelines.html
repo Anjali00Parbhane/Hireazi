@@ -1,0 +1,35 @@
+{%extends 'welcome/base.html'%}
+
+{%block body%}
+    <h1>Timelines</h1>
+    <!-- college_timelines.html -->
+
+<table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Admission Year</th>
+        <th>Current Year</th>
+        <th>Department</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for timeline in timelines %}
+      <tr>
+        <td><a href="{% url 'timeline_tasks' timeline.id %}">{{ timeline.title }}</a></td>
+        <td>{{ timeline.admission_year }}</td>
+        <td>{{ timeline.current_yr }}</td>
+        <td>{{ timeline.dept }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">No timelines found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+</body>
+</html>
+
+{%endblock%}

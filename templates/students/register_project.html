@@ -1,0 +1,97 @@
+{% extends 'students/student_base.html' %}
+
+{% block title %}Register New Project{% endblock %}
+
+{% block style %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+  }
+
+  .add {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .add label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .add input[type="text"],
+  .add select {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .add button {
+    background-color: #5469d4;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+  }
+
+  .add button:hover {
+    background-color: #45a049;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<br>
+<form class="add" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Add Project</button>
+</form>
+{% endblock %}
+
+
+
+
+  
+{% comment %} <form method="post">
+    {% csrf_token %}
+    <label for="project_title">Project Title:</label>
+    <input type="text" id="project_title" name="project_title" required>
+
+    <label for="project_domain">Project Domain:</label>
+    <select id="project_domain" name="project_domain" required>
+        <option>--Select--</option>
+        {% for domain in domains %}
+            <option value="{{ domain.id }}">{{ domain.domain_name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="tech_stack">Tech Stack:</label>
+    <select id="tech_stack" name="tech_stack" required>
+        {% for tech_stack in tech_stacks %}
+            <option value="{{ tech_stack.id }}">{{ tech_stack.name }}</option>
+        {% endfor %}
+    </select>
+    <label for="member_details_2">Member 2:</label>
+    <input type="text" id="member_details_2" name="member_details_2" required>
+
+    <label for="member_details_3">Member 3:</label>
+    <input type="text" id="member_details_3" name="member_details_3" required>
+
+    <label for="member_details_4">Member 4:</label>
+    <input type="text" id="member_details_4" name="member_details_4" required>
+
+    <button type="submit">Add Project</button>
+  </form>{% endblock%} {% endcomment %}

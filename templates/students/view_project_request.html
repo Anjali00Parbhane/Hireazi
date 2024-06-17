@@ -1,0 +1,59 @@
+{% extends 'students/student_base.html' %}
+
+{% block style %}
+<style>
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .card {
+    width: calc(25% - 20px); /* Adjust card width to fit four cards per row */
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+
+  .card p {
+    margin: 0 0 10px 0;
+  }
+
+  .card button {
+    background-color: #5469d4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .card button:hover {
+    background-color: #45a049;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<h1>Pending Project Requests</h1>
+{% if pending_requests %}
+<div class="card-container">
+  {% for request in pending_requests %}
+  <div class="card">
+    <p><strong>Project Name:</strong> {{ request.project }}</p>
+   <form action="{% url 'accept_project_request' request.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Accept</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No pending requests</p>
+{% endif %}
+{% endblock %}

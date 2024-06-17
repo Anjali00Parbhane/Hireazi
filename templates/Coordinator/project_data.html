@@ -1,0 +1,123 @@
+{%extends 'welcome/base.html'%}
+{%block css%}
+
+.h3{
+    font-size: 1.75rem;
+  }
+  
+{%endblock%}
+{%block body%}
+    <br>
+    <center><h3>Projects</h3></center>
+        <div class="container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Project Title</th>
+                        <th>Domain</th>
+                        <th>Tech Stack</th>
+                        <th>Members</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                    <tr>
+                        <td><a href="{% url 'project-tasks-id' project.id %}">{{ project.project_title }}</a></td>
+                        <td>{{ project.project_domain.domain_name }}</td>
+                        <td>{{ project.tech_stack.name }}</td>
+                        <td>
+                            <ul class="list-unstyled">
+                                <li>{{ project.member_details_1.name }}</li>
+                                <li>{{ project.member_details_2.name }}</li>
+                                <li>{{ project.member_details_3.name }}</li>
+                                <li>{{ project.member_details_4.name }}</li>
+                            </ul>
+                        </td>
+                        <td><a href="{% url 'edit-project' project.id %}" class="btn btn-primary">Edit Project</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">No projects found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+{%endblock%}
+
+{% comment %} {% extends 'welcome/base.html' %}
+{% block style %}
+  <!-- Add any custom CSS styles here -->
+
+{% endblock %}
+
+{% block body %}
+<br>
+<center><h1>Projects by College</h1></center>
+<div class="container">
+  <form id="filter-projects-form" method="post">
+    {% csrf_token %}
+    <button type="submit">Filter Projects</button>
+  </form>
+</div>
+<div class="container">
+  <div id="filtered-projects">
+    {% if projects %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Project Title</th>
+          <th>Domain</th>
+          <th>Tech Stack</th>
+          <th>Members</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for project in projects %}
+        <tr>
+          <td><a href="{% url 'project-tasks-id' project.id %}">{{ project.project_title }}</a></td>
+          <td>{{ project.project_domain.domain_name }}</td>
+          <td>{{ project.tech_stack.name }}</td>
+          <td>
+            <ul class="list-unstyled">
+              <li>{{ project.member_details_1.name }}</li>
+              <li>{{ project.member_details_2.name }}</li>
+              <li>{{ project.member_details_3.name }}</li>
+              <li>{{ project.member_details_4.name }}</li>
+            </ul>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4">No projects found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#filter-projects-form').submit(function(event) {
+      event.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: '/filter_projects/', // Update the URL to your project filtering endpoint
+        data: $('#filter-projects-form').serialize(),
+        success: function(response) {
+          $('#filtered-projects').html(response);
+        }
+      });
+    });
+  });
+</script>
+{% endblock %} {% endcomment %}
+
+

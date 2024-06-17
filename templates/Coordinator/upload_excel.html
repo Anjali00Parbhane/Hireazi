@@ -1,0 +1,10 @@
+{%extends 'welcome/base.html'%}
+
+{%block body%}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Upload Excel</button>
+</form>
+
+{%endblock%}

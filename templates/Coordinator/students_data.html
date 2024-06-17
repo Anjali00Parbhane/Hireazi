@@ -1,0 +1,153 @@
+{%extends 'welcome/base.html'%}
+{%block style%}
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    }
+  input,select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+    }
+    button[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+   button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+      }
+    
+      h3 {
+        color: #000000;
+      }
+    
+      .container-md {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 20px;
+      }
+    
+      form {
+        margin-top: 15px;
+      }
+    
+      button {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    
+      button:hover {
+        background-color: #0056b3;
+      }
+    
+      .container {
+        margin-top: 20px;
+      }
+    
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+    
+      th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+      }
+    
+      th {
+        background-color: #007bff;
+        color: #ffffff;
+      }
+    
+      tbody tr:hover {
+        background-color: #f1f1f1;
+      }
+      
+{%endblock%}
+{%block body%}
+<br>
+<center><h3>Students Data</h3></center>
+  <div class="container-md p-3">
+    <div class='row'>
+      <div class='col-3'></div>
+      <div class='col-6'>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">View Students</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class='container'>
+        <div id="filtered-students ">
+            {% if students %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Admission Year</th>
+                        <th>Department</th>
+                        <th>University Number </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.admission_year }}</td>
+                        <td>{{ student.department }}</td>
+                        <td>{{ student.university_no }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    
+    {%else%}
+        <center><h4>Select Admission Year and Department</h4></center>
+    {%endif%}
+</div>
+
+{%endblock%}
+
+{%block script%}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+        $(document).ready(function() {
+            $('#filter-form').submit(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '/filter_students/',
+                    data: $('#filter-form').serialize(),
+                    success: function(response) {
+                        $('#filtered-students').html(response);
+                    }
+                });
+            });
+        });
+    </script>
+
+{%endblock%}

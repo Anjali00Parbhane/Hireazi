@@ -1,0 +1,58 @@
+{%extends 'welcome/base.html'%}
+
+{%block css%}
+
+.h3{
+    font-size: 1.75rem;
+  }
+
+{%endblock%}
+
+{%block body%}
+        <br>
+      <center><h3>Mentor Registration</h3></center>
+        <div class="container">
+
+            <form action="{% url 'register_mentor' %}" method="POST">
+                {% csrf_token %}
+                <div class="col-sm-11">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="col-sm-11">
+                  <label for="department">Department</label>
+                  <select class="form-control" id="department" name="department" required>
+                     <option value="" disabled selected>------Select-------</option>
+                     {% for department in departments %}
+                     <option value="{{ department.id }}">{{ department.name }}</option>
+                     {% endfor %}
+                  </select>
+               </div>
+
+                <div class="col-sm-11">
+                    <label for="domain_id">Domain:</label>
+                    <select class="form-control" id="domain_id" name="domain_id" required>
+                        <option value="" selected disabled>Select Domain</option>
+                        {% for domain in domains %}
+                            <option value="{{ domain.id }}">{{ domain.domain_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-11">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="col-sm-11">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div><br>
+                <center><div class="col-12">
+                     <button type="submit" class="btn btn-primary">Add Mentors</button>
+                </div></center>
+            </form>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
+

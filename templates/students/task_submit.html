@@ -1,0 +1,16 @@
+{%extends 'students/student_base.html'%}
+
+{%block body%}
+<div class="container">
+    <h1>Task Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Task Name: {{ task.task_name.name }}</h5>
+            <p class="card-text">Description: {{ task.task_name.description }}</p>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+{%endblock%}

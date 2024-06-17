@@ -1,0 +1,103 @@
+{%extends 'students/student_base.html'%}
+
+
+
+{% block style %}
+<style>
+    .container {
+        margin-top: 20px;
+    }
+
+    h1 {
+        color: #5469d4;
+    }
+
+    .task-list {
+        margin-top: 20px;
+    }
+
+    .card {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #5469d4;
+    }
+
+    .card-text {
+        font-size: 16px;
+        color: #6c757d;
+    }
+
+    .card-text.status {
+        color: #28a745;
+    }
+
+     a {
+        color: #5469d4;
+        text-decoration: none;
+    } 
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    a{
+      color: white;
+    }
+
+    button{
+      background-color: #5469d4;
+      border-radius: 10px;
+      
+    }
+</style>
+{% endblock %}
+
+{%block body%}
+<div class="container">
+    <h1>Project Tasks: {{ project.project_title }}</h1>
+    <div class="task-list">
+        {% if tasks %}
+            <div class="row">
+                {% for task in tasks %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card" style="cursor: pointer;" onclick="openTaskDetailsPage('{{ task.id }}')">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ task.task_name.name }}</h5>
+                                <p class="card-text">{{ task.task_name.description }}</p>
+                                <p class="card-text">Status: {{ task.status }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No tasks found for this project.</p>
+        {% endif %}
+    </div>
+</div>
+{%endblock%}
+
+{%block script%}
+<script>
+    function openTaskDetailsPage(taskId) {
+        window.location.href = `/task-details/${taskId}/`; 
+    }
+</script>
+{%endblock%}

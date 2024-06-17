@@ -1,0 +1,131 @@
+{%extends 'mentors/mentor_base.html'%}
+{%block title%}Tasks and Reviews{%endblock%}
+{% block style %}
+<style>
+    .container {
+        margin-top: 20px;
+    }
+
+    h1 {
+        color: #5469d4;
+    }
+
+    .task-list {
+        margin-top: 20px;
+    }
+
+    .card {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #5469d4;
+    }
+
+    .card-text {
+        font-size: 16px;
+        color: #6c757d;
+    }
+
+    .card-text.status {
+        color: #28a745;
+    }
+
+    {% comment %} a {
+        color: #5469d4;
+        text-decoration: none;
+    } {% endcomment %}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    
+
+    button{
+      background-color: #5469d4;
+      border-radius: 10px;
+      
+    }
+</style>
+{% endblock %}
+{%block body%}
+<div class="container">
+    <h1>Project Tasks: {{ project.project_title }}</h1>
+    <div class="task-list">
+        {% if tasks %}
+            <div class="row">
+                {% for task in tasks %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card" style="cursor: pointer;" onclick="openTaskDetailsPage('{{ task.id }}')">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ task.task_name.name }}</h5>
+                                <p class="card-text">{{ task.task_name.description }}</p>
+                                <p class="card-text">Status: {{ task.status }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No tasks found for this project.</p>
+        {% endif %}
+    </div>
+    <h1>Project Reviews: {{ project.project_title }}</h1>
+    <div class="task-list">
+        {% if tasks %}
+            <div class="row">
+                {% for review in reviews %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card" style="cursor: pointer;" onclick="openReviewDetailsPage('{{ review.id }}')">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ review.review_name.name }}</h5>
+                                <p class="card-text">{{review.review_name.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No Reviews Scheduled till now.</p>
+        {% endif %}
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <center><a href="{% url 'finalize_project' project_id=project.pk %}"><button class="btn btn-primary">Enter Project Details</button></a></center>
+        </div>
+        <div class="col">
+            <center><a href="{% url 'plagiarism_check'%}"><button class="btn btn-primary">Check Plagiarism</button></a></center>
+        </div>
+    </div>
+</div>
+<br><br>
+{%endblock%}
+
+{%block script%}
+<script>
+    function openTaskDetailsPage(taskId) {
+        window.location.href = `/task-details-mentor/${taskId}/`; 
+    }
+    function openReviewDetailsPage(reviewId) {
+        window.location.href = `/review_details_mentor/${reviewId}/`; 
+    }
+</script>
+{%endblock%}

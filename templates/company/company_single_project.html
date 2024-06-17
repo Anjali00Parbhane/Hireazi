@@ -1,0 +1,232 @@
+ {%extends 'company/company_base.html'%}
+{% block title %}Explore Project{% endblock %}
+{% block style %}
+<style>
+.container {
+    margin-top: 20px;
+}
+
+.card {
+    background: #f5f5f5;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.card-text {
+    margin-bottom: 1rem;
+    font-size: 16px;
+    color: #555;
+}
+
+.card-text ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.card-text ul li {
+    margin-left: 0;
+}
+
+.card-text a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.card-text a:hover {
+    text-decoration: underline;
+}
+
+#contactButton {
+    background-color: #5469d4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#contactButton:hover {
+    background-color: #0056b3;
+}
+
+.carousel-inner img {
+    height: 300px;
+    object-fit: cover;
+}
+
+.logo-img {
+    max-height: 80px;
+    max-width: 80px;
+    border-radius: 50%;
+}
+
+.project-details {
+    margin-top: 20px;
+}
+
+.abstract-box {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+}
+
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.details-table th, .details-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.details-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="d-flex align-items-center justify-content-center">
+                {% if project.tech_stack.logo_image %}
+                    <img src="{{ project.tech_stack.logo_image.url }}" class="mr-3 logo-img" alt="Logo">
+                {% endif %}
+                <h3 class="project-title">{{ project.project_title }}</h3>
+            </div>
+            <div id="imageCarousel" class="carousel slide mt-4" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% if project.image_1 %}
+                        <div class="carousel-item active">
+                            <img src="{{ project.image_1.url }}" class="d-block w-100 img-fluid rounded" alt="Image 1">
+                        </div>
+                    {% endif %}
+                    {% if project.image_2 %}
+                        <div class="carousel-item">
+                            <img src="{{ project.image_2.url }}" class="d-block w-100 img-fluid rounded" alt="Image 2">
+                        </div>
+                    {% endif %}
+                </div>
+                <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+            <div class="project-details mt-4">
+                <p class="card-title text-uppercase font-weight-bold">College: {{ project.College }}</p>
+                <p class="card-text font-weight-bold">Abstract:</p>
+                <div class="abstract-box">
+                    {{ project.abstract }}
+                </div>
+                <table class="details-table">
+                    <tr>
+                        <th>Domain</th>
+                        <td>{{ project.project_domain }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tech Stack</th>
+                        <td>{{ project.tech_stack }}</td>
+                    </tr>
+                    <tr>
+                        <th>Communication and Presentation Score</th>
+                        <td>{{ project.communications_presentation_score }}</td>
+                    </tr>
+                    <tr>
+                        <th>Innovation Score</th>
+                        <td>{{ project.innovation_score }}</td>
+                    </tr>
+                    <tr>
+                        <th>Coding Standards Score</th>
+                        <td>{{ project.coding_standards_score }}</td>
+                    </tr>
+                    <tr>
+                        <th>Societal Needy Score</th>
+                        <td>{{ project.societal_score }}</td>
+                    </tr>
+                    <tr>
+                        <th>National Representation Score</th>
+                        <td>{{ project.national_representation_score }}</td>
+                    </tr>
+                    <tr>
+                        <th>Published anywhere</th>
+                        <td>{{ project.published }}</td>
+                    </tr>
+                    <tr>
+                        <th>Copyrighted</th>
+                        <td>{{ project.copyrighted }}</td>
+                    </tr>
+                    <tr>
+                        <th>Sponsored</th>
+                        <td>{{ project.sponsored }}</td>
+                    </tr>
+                    <tr>
+                        <th>Members</th>
+                        <td>
+                            <a href="{% url 'student_dashboard' student_id=project.member_details_1.id %}">{{ project.member_details_1.name }}</a>,
+                            <a href="{% url 'student_dashboard' student_id=project.member_details_2.id %}">{{ project.member_details_2.name }}</a>,
+                            <a href="{% url 'student_dashboard' student_id=project.member_details_3.id %}">{{ project.member_details_3.name }}</a>,
+                            <a href="{% url 'student_dashboard' student_id=project.member_details_4.id %}">{{ project.member_details_4.name }}</a>
+                        </td>
+                        
+                    </tr>
+                </table>
+                {% if project.support_doc %}
+                    <p class="card-text"><a href="{{ project.support_doc }}" class="btn btn-link">Download Support Document</a></p>
+                {% endif %}
+                <div class="text-center">
+                    <button type="button" id="contactButton" class="btn btn-primary">Contact</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+document.getElementById("contactButton").addEventListener("click", function() {
+    // Perform AJAX request to send mail
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "{% url 'send_contact_mail' pk=project.pk %}", true);
+    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                alert("Mail sent successfully!");
+            } else {
+                alert("Failed to send mail.");
+            }
+        }
+    };
+    xhr.send();
+});
+</script>
+{% endblock %}

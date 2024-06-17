@@ -1,0 +1,160 @@
+{% extends 'welcome/base.html' %}
+{% block body %}
+<style>
+    /* Style for form labels */
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    /* Style for form inputs */
+    input[type="text"],
+    input[type="number"],
+    select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    /* Style for checkbox */
+    input[type="checkbox"] {
+        margin-top: 5px;
+    }
+    /* Style for submit button */
+    button[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    /* Hover effect for submit button */
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<center><h1>Edit Project</h1></center><div class='container'>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- Project Title, Domain, and Tech Stack -->
+    <div>
+        <label for="project_title">Project Title:</label>
+        <input type="text" id="project_title" name="project_title" value="{{ project.project_title }}">
+    </div>
+    <div>
+        <label for="project_domain">Project Domain:</label>
+        <select id="project_domain" name="project_domain">
+            {% for domain in domains %}
+            <option value="{{ domain.id }}" {% if project.project_domain.id == domain.id %}selected{% endif %}>{{ domain.domain_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <label for="tech_stack">Tech Stack:</label>
+        <select id="tech_stack" name="tech_stack">
+            {% for stack in tech_stacks %}
+            <option value="{{ stack.id }}" {% if project.tech_stack.id == stack.id %}selected{% endif %}>{{ stack.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Members -->
+    <div>
+        <label for="member_details_1">Member 1:</label>
+        <select id="member_details_1" name="member_details_1">
+            {% for student in students %}
+            <option value="{{ student.id }}" {% if project.member_details_1.id == student.id %}selected{% endif %}>{{ student.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <label for="member_details_2">Member 2:</label>
+        <select id="member_details_2" name="member_details_2">
+            {% for student in students %}
+            <option value="{{ student.id }}" {% if project.member_details_2.id == student.id %}selected{% endif %}>{{ student.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <label for="member_details_3">Member 3:</label>
+        <select id="member_details_3" name="member_details_3">
+            {% for student in students %}
+            <option value="{{ student.id }}" {% if project.member_details_3.id == student.id %}selected{% endif %}>{{ student.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <label for="member_details_4">Member 4:</label>
+        <select id="member_details_4" name="member_details_4">
+            {% for student in students %}
+            <option value="{{ student }}" {% if project.member_details_4.id == student.id %}selected{% endif %}>{{ student.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Mentor -->
+    <div>
+        <label for="mentor_id">Mentor:</label>
+        <select id="mentor_id" name="mentor_id">
+            {% for mentor in mentors %}
+            <option value="{{ mentor }}" {% if project.mentor_id.id == mentor.id %}selected{% endif %}>{{ mentor.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Timeline -->
+    <div>
+        <label for="timeline_id">Timeline:</label>
+        <select id="timeline_id" name="timeline_id">
+            {% for timeline in timelines %}
+            <option value="{{ timeline.id }}" {% if project.timeline_id.id == timeline.id %}selected{% endif %}>{{ timeline.title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Communications Presentation Score -->
+    <div>
+        <label for="communications_presentation_score">Communications Presentation Score:</label>
+        <input type="number" id="communications_presentation_score" name="communications_presentation_score" value="{{ project.communications_presentation_score }}">
+    </div>
+
+    <!-- Innovation Score -->
+    <div>
+        <label for="innovation_score">Innovation Score:</label>
+        <input type="number" id="innovation_score" name="innovation_score" value="{{ project.innovation_score }}">
+    </div>
+
+    <!-- Coding Standards Score -->
+    <div>
+        <label for="coding_standards_score">Coding Standards Score:</label>
+        <input type="number" id="coding_standards_score" name="coding_standards_score" value="{{ project.coding_standards_score }}">
+    </div>
+
+    <!-- Societal Score -->
+    <div>
+        <label for="societal_score">Societal Score:</label>
+        <input type="number" id="societal_score" name="societal_score" value="{{ project.societal_score }}">
+    </div>
+
+    <!-- National Representation Score -->
+    <div>
+        <label for="national_representation_score">National Representation Score:</label>
+        <input type="number" id="national_representation_score" name="national_representation_score" value="{{ project.national_representation_score }}">
+    </div>
+
+    <!-- Sponsored -->
+    <div>
+        <label for="sponsored">Sponsored:</label>
+        <input type="checkbox" id="sponsored" name="sponsored" {% if project.sponsored %}checked{% endif %}>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit">Save Changes</button>
+</form>
+{% endblock %}
+</html>

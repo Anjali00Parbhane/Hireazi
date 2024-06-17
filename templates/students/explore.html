@@ -1,0 +1,57 @@
+{% extends 'students/student_base.html' %}
+
+{%block title%}Explore{%endblock%}
+{%block style%}
+<style>
+.container {
+    padding: 20px;
+}
+.card {
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #5469d4;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-title {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color:white;
+    text-decoration:underline;
+}
+.card-text {
+    font-size: 17px;
+    margin-bottom: 8px;
+    color:white;
+}
+</style>
+{%endblock%}
+{%block body%}
+<br>
+    <center><h2>Explore Amazing Projects!!</h2></center>
+    <br>
+    <div class="container">
+        <div class="row">
+            {% for project in projects %}
+            <div class="col-md-12">
+                <a href="{% url 'project_detail' pk=project.pk %}">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ project.project_title }}</h3>
+                            <p class="card-text">College: {{ project.College }}</p>
+                            <p class="card-text">Domain: {{ project.project_domain }}</p>
+                            <p class="card-text">Tech Stack: {{ project.tech_stack }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{%endblock%}
+
+{%block script %}
+<script src="../static/js/login.js"></script>
+{%endblock%}

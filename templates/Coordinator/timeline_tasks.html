@@ -1,0 +1,118 @@
+{% extends 'welcome/base.html' %}
+
+{% block style %}
+<style>
+    .container {
+        margin-top: 20px;
+    }
+
+    h1 {
+        color: #5469d4;
+    }
+
+    .task-list {
+        margin-top: 20px;
+    }
+
+    .card {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #5469d4;
+    }
+
+    .card-text {
+        font-size: 16px;
+        color: #6c757d;
+    }
+
+    .card-text.status {
+        color: #28a745;
+    }
+
+    {% comment %} a {
+        color: #5469d4;
+        text-decoration: none;
+    } {% endcomment %}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    a{
+      color: white;
+    }
+
+    button{
+      background-color: #5469d4;
+      border-radius: 10px;
+      
+    }
+</style>{%endblock%}
+{% block body %}
+<a href="{% url 'add_tasks_to_timeline' timeline_id %}" class="btn btn-primary">Add Task</a>
+<a href="{% url 'add_review_to_timeline' timeline_id %}" class="btn btn-primary">Add Review</a>
+
+<br><center><h2>Tasks Lists</h2></center><br>
+<div class="container">
+    <div class="row">
+        {% for task in timeline_tasks %}
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'edit_task' task_id=task.id timeline_id=timeline_id %}" >
+                <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ task.name }}</h5>
+                    <p class="card-text">{{ task.description }}</p>
+                    <p class="card-text">Due Date: {{ task.due_date }}</p>
+                    <p class="card-text">Notification Date: {{ task.notification_date }}</p>
+                </div>
+            </div></a>
+        </div>
+        {% empty %}
+        <div class="col">
+            <p>No tasks found for this timeline.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<br><center><h2>Review Lists</h2></center><br>
+<div class="container">
+    <div class="row">
+        {% for review in reviews %}
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'edit_review' review_id=review.id timeline_id=timeline_id %}" >
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ review.name }}</h5>
+                    <p class="card-text">{{ review.description }}</p>
+                    <p class="card-text">Due Date: {{ review.due_date }}</p>
+                    <p class="card-text">Notification Date: {{ review.notification_date }}</p>
+                </div>
+            </div>
+        </a>
+        </div>
+        {% empty %}
+        <div class="col">
+            <p>No tasks found for this timeline.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

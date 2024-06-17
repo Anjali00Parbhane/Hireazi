@@ -1,0 +1,89 @@
+{% extends 'mentors/mentor_base.html' %}
+
+{% block body %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+  }
+
+  h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders collapse properly */
+  }
+
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd; /* Adds a simple border */
+  }
+
+  th {
+    text-align: left; /* Align table headers to the left */
+  }
+
+  form {
+    margin-bottom: 20px; /* Adds space after the form */
+  }
+
+
+
+  .panel-members li {
+    margin-bottom: 5px; /* Spacing between list items */
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green color for the button */
+    color: white;
+    border: none;
+    border-radius: 5px; /* Rounded corners for the button */
+  }
+
+  button:hover {
+    background-color: #3e8e41; /* Darker green on hover */
+  }
+</style>
+
+<h1>Review Project Scores</h1>
+<form method="post">
+  {% csrf_token %}
+  <h2>Panel Members</h2>
+  <ul class="panel-members">
+    <li>{{ review_id.project.panel_id.panel_member_1 }}</li>
+    <li>{{ review_id.project.panel_id.panel_member_2 }}</li>
+    <li>{{ review_id.project.panel_id.panel_member_3 }}</li>
+    <li>{{ review_id.project.panel_id.panel_member_4 }}</li>
+  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>Project Title</th>
+        <th>Review Description</th>
+        <th>Total Score</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in projects %}
+      <tr>
+        <td>{{ project.project_title }}</td>
+        <td>{{ review_id.review_name.description }}</td>
+        <td>{{ review_id.review_name.review_total_score }}</td>
+        <td><input type="number" name="{{ project }}" value="{{ score }}"></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <button type="submit">Save</button>
+</form>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'students/student_base.html'%}
+{%block body%}{% comment %} 
+<div class="container">
+    <center><h1>My Amazing Projects</h1></center>
+    <div class="project-list">
+        {% if projects %}
+            {% for project in projects %}
+                <div class="project">
+                    <h2>{{ project.project_title }}</h2>
+                    <p><strong>Domain:</strong> {{ project.project_domain }}</p>
+                    <p><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
+                    <form action="{% url 'project_tasks' project.id %}" method="get">
+                        <button type="submit">View Tasks</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No projects found.</p>
+        {% endif %}
+    </div>
+</div> {% endcomment %}
+
+{% block view %}
+<style>
+    .card {
+        background-color: #f8f9fa; /* Set your desired background color */
+        border-radius: 15px;
+        border: 2px solid #5469d4; /* Set your desired border color */
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1.2rem;
+    }
+
+    button {
+        background-color: #5469d4;
+        border-radius: 15px;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #455bcd; /* Change the color on hover if desired */
+    }
+</style>
+{% endblock %}
+<br>
+<center><h2>My Amazing Projects</h2></center>
+<br>
+
+<div class="container">
+    
+    <div class="row">
+        {% if projects %}
+            {% for project in projects %}
+                <div class="col-md-11 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.project_title }}</h5>
+                            <p class="card-text"><strong>Domain:</strong> {{ project.project_domain }}</p>
+                            <p class="card-text"><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
+                            <form action="{% url 'project_tasks' project.id %}" method="get">
+                                <button type="submit"><strong>View Tasks</strong></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="col-md-12">No projects found.</p>
+        {% endif %}
+    </div>
+</div>
+
+{%endblock%}

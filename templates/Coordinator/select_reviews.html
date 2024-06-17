@@ -1,0 +1,52 @@
+{% extends 'welcome/base.html' %}
+
+{%block body%}
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="col-sm-11">
+            <div class="form-group">
+                 <label>Admission year</label>
+                 <input type="number" class="form-control" name="admission_year" >
+            </div>
+        </div>
+        <div class="col-sm-11">
+           <div class="form-group">
+              <label>Admission year</label>
+              <input type="number" class="form-control" name="admission_year" >
+           </div>
+        </div>
+        <div class="col-sm-11">
+           <label for="department">Department</label>
+           <select class="form-control" id="department" name="department" required>
+              <option value="" disabled selected>------Select-------</option>
+              {% for department in departments %}
+              <option value="{{ department.id }}">{{ department.name }}</option>
+              {% endfor %}
+           </select>
+        </div>
+        <button type="submit">Select Reviews</button>
+    </form>
+
+    {% if reviews %}
+    <table>
+        <thead>
+            <tr>
+                {% for review in reviews %}
+                <th>{{ review }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for review, project_list in review_projects.items %}
+            <tr>
+                {% for project in project_list %}
+                <td><a href="{% url 'review_details' project.review_id project.id %}">{{ project }}</a></td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

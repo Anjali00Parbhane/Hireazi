@@ -1,0 +1,26 @@
+{%extends 'mentors/mentor_base.html'%}
+
+{% block body %}
+<div class="container">
+    <h1>Task Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Task Name: {{ task.task_name.name }}</h5>
+            <p class="card-text">Description: {{ task.task_name.description }}</p>
+            <p class="card-text">Response: {{ task.response }}</p>
+            {% if task.document %}
+                <p class="card-text">Document: <a href="{{ task.document.url }}">{{ task.document }}</a></p>
+            {% endif %}            
+            <form method='post' enctype="multipart/form-data">
+            {% csrf_token %}
+                {{ form.as_p }}
+                <button  name="verify" value="verify" class="btn btn-success">Verify</button>
+                <button  name="reassign" value="reassign" class="btn btn-danger">Reassign</button>
+                <button type="submit"  class="btn ">Submit</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

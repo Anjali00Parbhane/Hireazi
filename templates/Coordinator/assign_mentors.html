@@ -1,0 +1,138 @@
+{% extends 'welcome/base.html' %}
+{% block body %}
+
+<div class="container-fluid">
+    <center><h1>Assign Mentors to Projects</h1></center>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Project Title</th>
+                <th>Domain</th>
+                <th>Tech Stack</th>
+                <th>Students</th>
+                <th>Assigned Mentor</th>
+                <th>Select Mentor</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.project_title }}</td>
+                <td>{{ project.project_domain }}</td>
+                <td>{{ project.tech_stack }}</td>
+                <td>{{project.member_details_1}}<br>{{project.member_details_2}}<br>{{project.member_details_3}}<br>{{project.member_details_4}}</td>
+                <td>{{project.mentor_id.name}}</td>
+                <td>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <select class="form-control" name="mentor_{{ project.id }}">
+                                <option value="" disabled selected>------Select-------</option>
+                                {% for mentor in mentors %}
+                                <option value="{{ mentor.id }}">{{ mentor.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Assign Mentor</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% comment %} <div class="container">
+    <center><h1>Assign Mentors and Panel to Projects</h1></center>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Project Title</th>
+                <th>Domain</th>
+                <th>Tech Stack</th>
+                <th>Select Mentor</th>
+                <th>Select Panel</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project, mentors in mentors_by_domain.items %}
+            <tr>
+                <td>{{ project.project_title }}</td>
+                <td>{{ project.project_domain }}</td>
+                <td>{{ project.tech_stack }}</td>
+                <td>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <select class="form-control" name="mentor_{{ project.id }}">
+                                <option value="" disabled selected>------Select Mentor-------</option>
+                                {% for mentor in mentors %}
+                                <option value="{{ mentor.id }}">{{ mentor.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        
+                        <select class="form-control" name="panel_{{ project.id }}">
+                            <option value="" disabled selected>------Select-------</option>
+                            {% for panel in panels %}
+                                <option value="{{ panel.id }}">{{ panel.id }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Assign Mentor and Panel</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div> {% endcomment %}
+
+
+{% endblock %}
+
+
+{% comment %} 
+{%extends 'welcome/base.html'%}
+{%block body%}
+
+<div class="container">
+    <center><h1>Assign Mentors to Projects</h1></center>
+    <div class="row">
+        {% for project, mentors in mentors_by_domain.items %}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.project_title }}</h5>
+                        <p class="card-text"><strong>Domain:</strong> {{ project.project_domain }}</p>
+                        <p class="card-text"><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
+                        <form  method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                
+                                <label for="mentor_{{ project.id }}">Select Mentor:</label>
+                                <select class='form-control' name="mentor_{{ project.id }}">
+                                    {% for mentor in mentors %}
+                                        <option value="{{ mentor.id }}">{{ mentor.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Assign Mentor</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{%endblock%} {% endcomment %}
